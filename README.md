@@ -35,3 +35,10 @@ python manage.py createsuperuser
 10. В women/views.py прописать представление WomenAPIView.<br>
 11. Создать сериализатор women/serializers.py<br>
 12. Добавить URL-шаблон в drfsite/urls.py `path('api/v1/womenlist/', WomenAPIView.as_view())`<br>
+
+## Класс Serializer
+1. В women/serializer определели сериализатор для модели Women. С помощью сериализатора можем преобразовывать объекты модели в словарь, а затем словарь в JSON строку (JSONRenderer()).<br>
+
+2.В women/views.py при GET-запросе: вызывается JSONRenderer() и преобразовывает данные в байтовую JSON строку, клиент принимает  байтовую JSON строку.<br>
+
+3. В women/views.py при POSt-запросе (принимаем данные): с помощью WomenSerializer() распаковываем данные -> успешная проверка -> добавляем запись в БД и возвращаем то, что было добавлено.<br>

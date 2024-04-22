@@ -32,6 +32,6 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 9. В admin.py прописать приложение Women.<br>
-10. В women/views.py прописать представления WomenAPIView.<br>
-11. Создать women/serializers.py<br>
-12. Добавить URL-шаблон в drfsite/urls.py<br>
+10. В women/views.py прописать представление WomenAPIView.<br>
+11. Создать сериализатор women/serializers.py<br>
+12. Добавить URL-шаблон в drfsite/urls.py `path('api/v1/womenlist/', WomenAPIView.as_view())`<br>

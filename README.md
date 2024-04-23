@@ -46,3 +46,22 @@ python manage.py createsuperuser
 ## Методы save(), create() и update() класса Serializer
 1. В women/views.py - обработка запросов, прописать методы POST, GET, CREATE, UPDATE, DELETE.<br>
 2. Весь функционал по обработке данных в сериализаторе - обработка данных.
+
+## Ограничения доступа (permissions)
+1. В women/models.py в class Women добавить поле user.<br>
+2. Сделать миграции:<br>
+```bash
+python manage.py makemigrations # 1
+python manage.py migrate
+```
+3. В women/views.py вместо class WomenViewSet задать три класса обычных представлений WomenAPIList - возвращает список статей, WomenAPIUpdate - изменяет записи, WomenAPIDestroy - удаляет записи.<br>
+4. Добавить URL-шаблон в drfsite/urls.py:<br>
+```text
+    path('api/v1/women/', WomenAPIList.as_view()),
+    path('api/v1/women/<int:pk>/', WomenAPIUpdate.as_view()),
+    path('api/v1/womendelete/<int:pk>/', WomenAPIDestroy.as_view()),
+```
+5. Добавление записи только для авторизованных пользователей в women/views.py/WomenAPIList добавить: `permission_classes = (IsAuthenticatedOrReadOnly,)`<br>
+6. Автоматическая связь пользователя с добаленной записью в women/serializers.py длбавить `user = serializers.HiddenField(default=serializers.CurrentUserDefault())`<br>
+7. Просматривать записи для каждого пользователя, а удалять только админ - создать класс в women/permissions.py: `class IsAdminReadOnly`.<br> В women/views.py/WomenAPIDestroy `permission_classes = (IsAdminReadOnly, )`<br>
+8. Для изменения записи только автору, а просматривать всем создать class IsOwnerOrReadOnly вwomen/permissions.py -> women/views.py/WomenAPIUpdate `permission_classes = (IsOwnerOrReadOnly,)`<br>

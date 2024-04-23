@@ -65,3 +65,27 @@ python manage.py migrate
 6. Автоматическая связь пользователя с добаленной записью в women/serializers.py длбавить `user = serializers.HiddenField(default=serializers.CurrentUserDefault())`<br>
 7. Просматривать записи для каждого пользователя, а удалять только админ - создать класс в women/permissions.py: `class IsAdminReadOnly`.<br> В women/views.py/WomenAPIDestroy `permission_classes = (IsAdminReadOnly, )`<br>
 8. Для изменения записи только автору, а просматривать всем создать class IsOwnerOrReadOnly вwomen/permissions.py -> women/views.py/WomenAPIUpdate `permission_classes = (IsOwnerOrReadOnly,)`<br>
+
+## Аутентификация по токенам. Пакет Djoser
+1. Установить библиотеку Djoser:<br>
+```bash
+pip install Djoser
+```
+2. В INSTALLED_APPS добавить: `"rest_framework.authtoken",`, `"djoser",`<br>
+3. Сделать миграции<br>
+```bash
+python manage.py migrate
+```
+4. Добавить маршруты в drfsite/urls.py:<br>
+```text
+    path('api/v1/auth/', include('djoser.urls')),
+    re_path(r'^auth/', include("djoser.urls.authtoken")),
+```
+5. Разрешить аутентификацию по токену settings.py/REST_FRAMEWORK:<br>
+```text
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        )
+```

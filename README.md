@@ -149,3 +149,12 @@ pip install djangorestframework-simplejwt
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 ```
+## Пагинация (pagination)
+1. Автоматическая пагинация к списку данных для всего проекта в settings.py добавить:<br>
+```text
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 2,
+}
+```
+2. Определенная пагинация для некоторых запросов.<br> Создать свой класс пагинации в women/views.py `class WomenListPagination` и подключить его к виду  `pagination_class = WomenListPagination`.<br>

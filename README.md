@@ -2,7 +2,7 @@
 
 1. Создание и активация виртуального окружения:<br>
 ```bash
-python3-m venv env
+python3 -m venv env
 . ./env/bin/activate
 ```
 2. Установить Django и Django DRF:<br>
@@ -204,4 +204,20 @@ urlpatterns = [
    ...
 ]
 
+```
+## Развертывание с помощью Docker Compose
+1.Запустить<br>
+```bash
+docker-compose up -d
+```
+2.Ожидаемый результат<br>
+```text
+docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
+3adaea94142d        drfsite_web          "python3 manage.py r…"   About a minute ago   Up About a minute   0.0.0.0:8000->8000/tcp   django_web_1
+```
+3.После запуска приложения перейти http://localhost:8000 в веб-браузере<br>
+4.Остановить и удалить контейнеры.<br>
+```bash
+docker compose down
 ```
